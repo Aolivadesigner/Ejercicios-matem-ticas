@@ -2,6 +2,7 @@ let ejercicios = [];
 let lista, resultadoFinal;
 let temporizador, minutos, segundos;
 let canvasData = [];
+let fontSize = 30; // tamaño inicial en px
 
 function iniciarExamen(){
   const num = parseInt(document.getElementById("numEjercicios").value);
@@ -15,6 +16,7 @@ function iniciarExamen(){
   lista.innerHTML="";
   ejercicios=[];
   canvasData=[];
+  lista.style.fontSize = fontSize + "px"; // aplica tamaño inicial
 
   const min = 1, max = 100;
   for(let i=0;i<num;i++){
@@ -46,24 +48,19 @@ function iniciarExamen(){
     document.getElementById("contador").textContent=`${String(minutos).padStart(2,'0')}:${String(segundos).padStart(2,'0')}`;
   },1000);
 }
-//ajuste tamaño de texto
 
+// Cambiar tamaño de texto
 function ampliarTexto(){
-  let lista = document.getElementById("lista-ejercicios");
-  let style = window.getComputedStyle(lista, null).getPropertyValue('font-size');
-  let size = parseFloat(style);
-  lista.style.fontSize = (size + 4) + "px"; // aumenta 4px
+  fontSize += 4;
+  lista.style.fontSize = fontSize + "px";
 }
 
 function reducirTexto(){
-  let lista = document.getElementById("lista-ejercicios");
-  let style = window.getComputedStyle(lista, null).getPropertyValue('font-size');
-  let size = parseFloat(style);
-  if(size > 10) lista.style.fontSize = (size - 4) + "px"; // disminuye 4px
+  if(fontSize > 10){
+    fontSize -= 4;
+    lista.style.fontSize = fontSize + "px";
+  }
 }
-// Columna única / multi-columna
-function ampliar(){ lista.style.gridTemplateColumns="1fr"; }
-function reducir(){ lista.style.gridTemplateColumns=""; }
 
 // Canvas para escribir a mano
 function initCanvas(id){
@@ -112,4 +109,7 @@ function finalizarExamen(){
 function volverHome(){ window.location.href="index.html"; }
 
 // Hacer otro examen
-function hacerOtroExamen(){ document.getElementById("examen").style.display="none"; document.getElementById("inicio").style.display="block"; }
+function hacerOtroExamen(){ 
+  document.getElementById("examen").style.display="none"; 
+  document.getElementById("inicio").style.display="block"; 
+}
