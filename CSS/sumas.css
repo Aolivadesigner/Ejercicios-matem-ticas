@@ -1,0 +1,21 @@
+#lista-ejercicios {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 20px;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 10px;
+  font-size: 30px; /* tamaño inicial */
+}
+
+@media(max-width:1000px){
+  #lista-ejercicios{ grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:600px){
+  #lista-ejercicios{ grid-template-columns:1fr;}
+}
+
+.ejercicio input.respuesta {
+  font-size: inherit; /* hereda tamaño del contenedor */
+}
