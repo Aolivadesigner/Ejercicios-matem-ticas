@@ -3,17 +3,20 @@ body {
   background: #f5f5f5;
   padding: 20px;
 }
+
 h1 {
   text-align: center;
   margin-bottom: 40px;
   font-size: 200px;
 }
+
 .menu {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 15px;
 }
+
 a, button {
   display: block;
   margin: 15px auto;
@@ -30,17 +33,12 @@ a, button {
   box-shadow: 0 4px 6px rgba(0,0,0,0.2);
   transition: background 0.3s, transform 0.2s;
 }
+
 a:hover, button:hover {
   background: #45a049;
   transform: translateY(-2px);
 }
-@media(max-width:600px){
-  a, button {
-    font-size: 18px;
-    padding: 16px 20px;
-    width: 90%;
-  }
-}
+
 @media(max-width:600px){
   a, button {
     font-size: 18px;
@@ -50,7 +48,7 @@ a:hover, button:hover {
 
   h1 {
     font-size: 36px;      /* más pequeño en móvil */
-    margin-top: 60px;      /* menos margen superior en móvil */
+    margin-top: 60px;     /* menos margen superior en móvil */
     margin-bottom: 20px;
   }
 }
