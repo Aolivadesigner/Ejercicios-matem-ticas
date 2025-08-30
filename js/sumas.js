@@ -1,12 +1,13 @@
 let ejercicios = [];
+let fontSize = 30;
 let lista, resultadoFinal;
 let temporizador, minutos, segundos;
 let canvasData = [];
-let fontSize = 30; // tamaño inicial en px
+let canvasGrande, ctxGrande;
 
 function iniciarExamen(){
   const num = parseInt(document.getElementById("numEjercicios").value);
-  if(num < 15 || num > 100){ alert("El número debe estar entre 15 y 100"); return; }
+  if(num<15 || num>100){ alert("El número debe estar entre 15 y 100"); return; }
 
   document.getElementById("inicio").style.display="none";
   document.getElementById("examen").style.display="block";
@@ -14,9 +15,8 @@ function iniciarExamen(){
   lista = document.getElementById("lista-ejercicios");
   resultadoFinal = document.getElementById("resultado-final");
   lista.innerHTML="";
-  ejercicios=[];
-  canvasData=[];
-  lista.style.fontSize = fontSize + "px"; // aplica tamaño inicial
+  ejercicios=[]; canvasData=[];
+  lista.style.fontSize = fontSize + "px";
 
   const min = 1, max = 100;
   for(let i=0;i<num;i++){
@@ -28,17 +28,20 @@ function iniciarExamen(){
     div.innerHTML = `
       <div class="ejercicio-superior">
         <span class="numero">${i+1}.</span>
-        <span class="ecuacion">${a} + ${b} =</span>
+        <span class="ecuacion" onclick="abrirCanvasGrande(${i})">${a} + ${b} =</span>
         <input type="number" class="respuesta" id="respuesta${i}" />
       </div>
       <canvas id="canvas${i}"></canvas>
       <span class="solucion-ejercicio" id="solucion${i}"></span>
     `;
     lista.appendChild(div);
-
-    // Inicializar canvas
     initCanvas(`canvas${i}`);
   }
+
+  // Inicializar canvas grande
+  canvasGrande = document.getElementById("canvas-grande");
+  ctxGrande = canvasGrande.getContext("2d");
+  initCanvasGrande();
 
   minutos=0; segundos=0;
   clearInterval(temporizador);
@@ -49,70 +52,45 @@ function iniciarExamen(){
   },1000);
 }
 
-// Cambiar tamaño de texto
-let fontSize = 30; // tamaño inicial
-const lista = document.getElementById("lista-ejercicios");
+// Ampliar/Reducir texto
+function ampliarTexto(){ fontSize+=4; lista.style.fontSize = fontSize+'px'; }
+function reducirTexto(){ if(fontSize>10){ fontSize-=4; lista.style.fontSize = fontSize+'px'; } }
 
-function ampliarTexto(){
-  fontSize += 4;
-  lista.style.fontSize = fontSize + 'px';
-}
-
-function reducirTexto(){
-  if(fontSize > 10){
-    fontSize -= 4;
-    lista.style.fontSize = fontSize + 'px';
-  }
-}
-
-// Canvas para escribir a mano
+// Canvas pequeño
 function initCanvas(id){
   const canvas = document.getElementById(id);
   const ctx = canvas.getContext("2d");
   let dibujando=false;
   let lastX=0, lastY=0;
 
-  canvas.addEventListener('pointerdown', e=>{ dibujando=true; lastX = e.offsetX; lastY = e.offsetY; });
-  canvas.addEventListener('pointermove', e=>{ if(!dibujando) return; ctx.beginPath(); ctx.moveTo(lastX,lastY); ctx.lineTo(e.offsetX,e.offsetY); ctx.strokeStyle="black"; ctx.lineWidth=2; ctx.stroke(); lastX = e.offsetX; lastY = e.offsetY; });
-  canvas.addEventListener('pointerup',()=>{ dibujando=false; guardarCanvas(); });
-  canvas.addEventListener('pointerout',()=>{ dibujando=false; guardarCanvas(); });
+  canvas.addEventListener('pointerdown', e=>{ dibujando=true; lastX=e.offsetX; lastY=e.offsetY; });
+  canvas.addEventListener('pointermove', e=>{ if(!dibujando) return; ctx.beginPath(); ctx.moveTo(lastX,lastY); ctx.lineTo(e.offsetX,e.offsetY); ctx.strokeStyle="black"; ctx.lineWidth=2; ctx.stroke(); lastX=e.offsetX; lastY=e.offsetY; });
+  canvas.addEventListener('pointerup', ()=>{ dibujando=false; guardarCanvas(id); });
+  canvas.addEventListener('pointerout', ()=>{ dibujando=false; guardarCanvas(id); });
 
-  function guardarCanvas(){ canvasData[id]=canvas.toDataURL(); }
+  function guardarCanvas(cid){ canvasData[cid]=canvas.toDataURL(); }
 }
 
-// Finalizar examen
-function finalizarExamen(){
-  clearInterval(temporizador);
-  for(let i=0;i<ejercicios.length;i++){
-    const val = document.getElementById(`respuesta${i}`).value;
-    if(val==""||isNaN(val)){ alert("Completa todos los ejercicios"); return; }
-  }
-
-  let aciertos=0;
-  ejercicios.forEach((e,i)=>{
-    const input = document.getElementById(`respuesta${i}`);
-    const span = document.getElementById(`solucion${i}`);
-    span.textContent=`= ${e.resultado}`;
-    if(parseInt(input.value)===e.resultado) aciertos++;
-  });
-
-  resultadoFinal.textContent = `Has acertado ${aciertos} de ${ejercicios.length} (${((aciertos/ejercicios.length)*10).toFixed(1)}/10)`;
-
-  // Datos exportables
-  const exportData = ejercicios.map((e,i)=>({
-    ejercicio:`${e.a} + ${e.b}`,
-    respuesta: document.getElementById(`respuesta${i}`).value,
-    solucion: e.resultado,
-    dibujo: canvasData[`canvas${i}`] || null
-  }));
-  console.log(exportData); // aquí podrías enviar por correo o guardar en servidor
+// Canvas grande (modo Cánovas)
+function initCanvasGrande(){
+  let dibujando=false, lastX=0, lastY=0;
+  canvasGrande.addEventListener('pointerdown', e=>{ dibujando=true; lastX=e.offsetX; lastY=e.offsetY; });
+  canvasGrande.addEventListener('pointermove', e=>{ if(!dibujando) return; ctxGrande.beginPath(); ctxGrande.moveTo(lastX,lastY); ctxGrande.lineTo(e.offsetX,e.offsetY); ctxGrande.strokeStyle="black"; ctxGrande.lineWidth=3; ctxGrande.stroke(); lastX=e.offsetX; lastY=e.offsetY; });
+  canvasGrande.addEventListener('pointerup', ()=>{ dibujando=false; });
+  canvasGrande.addEventListener('pointerout', ()=>{ dibujando=false; });
 }
 
-// Volver Home
-function volverHome(){ window.location.href="index.html"; }
-
-// Hacer otro examen
-function hacerOtroExamen(){ 
-  document.getElementById("examen").style.display="none"; 
-  document.getElementById("inicio").style.display="block"; 
+function abrirCanvasGrande(i){
+  const c = document.getElementById(`canvas${i}`);
+  ctxGrande.clearRect(0,0,canvasGrande.width, canvasGrande.height);
+  const img = new Image();
+  img.onload = ()=>{ ctxGrande.drawImage(img,0,0,canvasGrande.width,canvasGrande.height); }
+  img.src = c.toDataURL();
+  document.getElementById("canvas-grande-container").style.display="flex";
 }
+
+function cerrarCanvasGrande(){
+  document.getElementById("canvas-grande-container").style.display="none";
+}
+
+// Finalizar
