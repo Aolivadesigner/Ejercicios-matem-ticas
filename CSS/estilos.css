@@ -25,7 +25,7 @@ h1 {
 #lista-ejercicios {
   display: grid;
   grid-template-columns: repeat(4,1fr);
-  gap: 20px;
+  gap: 10px; /* menos espacio entre ejercicios */
   max-height: 60vh;
   overflow-y: auto;
   padding-right: 10px;
@@ -37,9 +37,10 @@ h1 {
 
 .ejercicio{
   display:flex;
-  flex-direction:column;
+  align-items:center;
   gap:10px;
-  margin-bottom:10px;
+  margin-bottom:8px; /* más compacto */
+  font-size:inherit;
 }
 
 .ejercicio-superior{
@@ -51,15 +52,6 @@ h1 {
 .numero{ font-weight:bold; width:40px; text-align:right; }
 .ecuacion{ min-width:120px; cursor:pointer; }
 .respuesta{ width:100px; text-align:right; padding:6px; font-size:inherit; }
-.solucion-ejercicio{ text-align:right; color:#e91e63; font-weight:bold; font-size:25px; }
-
-canvas{
-  border:1px solid #333;
-  border-radius:4px;
-  width:100%;
-  height:80px;
-  touch-action:none;
-}
 
 #controles {
   display: flex;
@@ -69,22 +61,25 @@ canvas{
   margin-bottom: 10px;
 }
 
-#controles button {
+#controles button, #inicio button, .ejercicio button {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px 20px;
-  font-size: 22px;
+  padding: 20px 30px;
+  font-size: 30px;
   border-radius: 8px;
   border: none;
   background: #1976d2;
   color: white;
   cursor: pointer;
   transition: background 0.3s, transform 0.2s, font-size 0.2s ease;
+  width: 80%;
+  max-width: 400px;
+  margin: 10px auto;
 }
 
-#controles button:hover {
+#controles button:hover, #inicio button:hover, .ejercicio button:hover {
   background: #1565c0;
   transform: translateY(-2px);
 }
