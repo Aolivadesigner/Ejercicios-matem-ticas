@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Examen de Sumas</title>
+<link rel="stylesheet" href="css/estilos.css">
+<style>
+.contenedor { max-width:1000px; margin:auto; background:#fff; padding:20px; border-radius:8px; box-shadow:0 0 5px rgba(0,0,0,0.2);}
+.grid-ejercicios { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; max-height:60vh; overflow-y:auto; padding-right:10px; }
+@media(max-width:1000px){ .grid-ejercicios{ grid-template-columns:repeat(2,1fr);} }
+@media(max-width:600px){ .grid-ejercicios{ grid-template-columns:1fr;} }
+
+.ejercicio{ display:flex; flex-direction:column; gap:10px; margin-bottom:10px; font-size:30px;}
+.ejercicio-superior{ display:flex; align-items:center; gap:10px; }
+.numero{ font-weight:bold; width:40px; text-align:right;}
+.ecuacion{ min-width:120px;}
+.respuesta{ width:100px; text-align:right; padding:6px; font-size:30px;}
+.solucion-ejercicio{ text-align:right; color:#e91e63; font-weight:bold; font-size:25px;}
+canvas{ border:1px solid #333; border-radius:4px; width:100%; height:80px; touch-action:none; }
+button{ display:block; margin:20px auto; padding:20px 30px; font-size:30px; border:none; border-radius:8px; background:#4CAF50; color:white; cursor:pointer; width:80%; max-width:400px; }
+button:hover{ background:#45a049; transform:translateY(-2px);}
+#contador{ text-align:center; font-size:30px; margin-bottom:15px; }
+input[type=number]{ font-size:30px; }
+</style>
+</head>
+<body>
+<h1>Examen de Sumas Aleatorias</h1>
+<div class="contenedor">
+
+  <div id="inicio">
+    <label for="numEjercicios">Número de ejercicios (15-100): </label>
+    <input type="number" id="numEjercicios" min="15" max="100" value="50">
+    <button onclick="iniciarExamen()">Iniciar Examen</button>
+  </div>
+
+  <div id="examen" style="display:none;">
+    <div id="contador">00:00</div>
+    <div>
+      <button onclick="ampliar()">Ampliar</button>
+      <button onclick="reducir()">Reducir</button>
+    </div>
+    <div class="grid-ejercicios" id="lista-ejercicios"></div>
+    <button onclick="finalizarExamen()">Finalizar</button>
+    <div class="resultado-final" id="resultado-final"></div>
+    <div style="margin-top:20px;">
+      <button onclick="volverHome()">Home</button>
+      <button onclick="hacerOtroExamen()">Hacer otro examen</button>
+    </div>
+  </div>
+
+</div>
+<script src="js/sumas.js"></script>
+</body>
+</html>
