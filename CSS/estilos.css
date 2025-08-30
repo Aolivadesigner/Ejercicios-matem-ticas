@@ -9,51 +9,56 @@ h1 {
   margin-bottom: 20px;
 }
 
-#inicio, #examen {
-  max-width: 900px;
-  margin: 0 auto;
+.contenedor {
+  max-width:1000px;
+  margin:auto;
+  background:#fff;
+  padding:20px;
+  border-radius:8px;
+  box-shadow:0 0 5px rgba(0,0,0,0.2);
 }
 
-input, button {
-  font-size: 24px;
-  padding: 10px;
-  margin: 5px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+#inicio, #examen {
+  margin-bottom: 20px;
 }
 
 #lista-ejercicios {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 20px;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 10px;
+  font-size: 30px;
 }
 
-.ejercicio {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  background: white;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+@media(max-width:1000px){ #lista-ejercicios{ grid-template-columns:repeat(2,1fr);} }
+@media(max-width:600px){ #lista-ejercicios{ grid-template-columns:1fr;} }
+
+.ejercicio{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-bottom:10px;
 }
 
-.ejercicio-superior {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+.ejercicio-superior{
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
-.numero {
-  font-weight: bold;
-}
+.numero{ font-weight:bold; width:40px; text-align:right; }
+.ecuacion{ min-width:120px; cursor:pointer; }
+.respuesta{ width:100px; text-align:right; padding:6px; font-size:inherit; }
+.solucion-ejercicio{ text-align:right; color:#e91e63; font-weight:bold; font-size:25px; }
 
-canvas {
-  border:1px solid #ccc;
-  width: 100%;
-  height: 150px;
-  touch-action: none;
+canvas{
+  border:1px solid #333;
+  border-radius:4px;
+  width:100%;
+  height:80px;
+  touch-action:none;
 }
 
 #controles {
@@ -64,25 +69,57 @@ canvas {
   margin-bottom: 10px;
 }
 
-#resultado-final {
-  margin-top: 20px;
-  font-size: 24px;
-  font-weight: bold;
+#controles button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  font-size: 22px;
+  border-radius: 8px;
+  border: none;
+  background: #1976d2;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s, font-size 0.2s ease;
 }
 
-#contador {
-  text-align: center;
-  font-size: 24px;
-  margin-bottom: 10px;
+#controles button:hover {
+  background: #1565c0;
+  transform: translateY(-2px);
 }
 
-@media(max-width:600px){
-  input, button {
-    font-size: 18px;
-    padding: 8px;
-  }
+#contador{ text-align:center; font-size:30px; margin-bottom:15px; }
+.resultado-final{ margin-top:20px; font-size:24px; font-weight:bold; text-align:center; }
 
-  canvas {
-    height: 120px;
-  }
+#canvas-grande-container {
+  position: fixed;
+  top: 0; left:0;
+  width:100%; height:100%;
+  background: rgba(0,0,0,0.7);
+  display: none;
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
+}
+
+#canvas-grande {
+  background:white;
+  border-radius:8px;
+  border:1px solid #333;
+  width:90%;
+  max-width:600px;
+  height:400px;
+  touch-action:none;
+}
+#cerrar-canvas{
+  position:absolute;
+  top:10px; right:10px;
+  background:#e91e63;
+  color:white;
+  border:none;
+  padding:8px 12px;
+  font-size:18px;
+  border-radius:6px;
+  cursor:pointer;
 }
