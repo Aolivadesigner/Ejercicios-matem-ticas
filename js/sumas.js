@@ -50,15 +50,18 @@ function iniciarExamen(){
 }
 
 // Cambiar tamaño de texto
+let fontSize = 30; // tamaño inicial
+const lista = document.getElementById("lista-ejercicios");
+
 function ampliarTexto(){
   fontSize += 4;
-  lista.style.fontSize = fontSize + "px";
+  lista.style.fontSize = fontSize + 'px';
 }
 
 function reducirTexto(){
   if(fontSize > 10){
     fontSize -= 4;
-    lista.style.fontSize = fontSize + "px";
+    lista.style.fontSize = fontSize + 'px';
   }
 }
 
