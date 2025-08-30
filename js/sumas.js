@@ -1,117 +1,62 @@
-let ejercicios = [];
-let fontSize = 30;
-let lista, resultadoFinal;
-let temporizador, minutos, segundos;
-let canvasGrande, ctxGrande;
-let canvasActual = null;
+let num1, num2;
 
-function iniciarExamen(){
-  const num = parseInt(document.getElementById("numEjercicios").value);
-  if(num<15 || num>100){ alert("El número debe estar entre 15 y 100"); return; }
+// Generar operación aleatoria
+function nuevaOperacion() {
+  num1 = Math.floor(Math.random() * 50) + 1;
+  num2 = Math.floor(Math.random() * 50) + 1;
+  document.getElementById("operacion").textContent = `${num1} + ${num2} = ?`;
+  document.getElementById("respuesta").value = "";
+  document.getElementById("resultado").textContent = "";
+}
 
-  document.getElementById("inicio").style.display="none";
-  document.getElementById("examen").style.display="block";
-
-  lista = document.getElementById("lista-ejercicios");
-  resultadoFinal = document.getElementById("resultado-final");
-  lista.innerHTML="";
-  ejercicios=[];
-
-  const min = 1, max = 100;
-  for(let i=0;i<num;i++){
-    const a = Math.floor(Math.random()*(max-min+1))+min;
-    const b = Math.floor(Math.random()*(max-min+1))+min;
-    ejercicios.push({a,b,resultado:a+b});
-    const div = document.createElement("div");
-    div.classList.add("ejercicio");
-    div.style.fontSize = fontSize + "px";
-    div.innerHTML = `
-      <span class="numero">${i+1}.</span>
-      <span class="ecuacion">${a} + ${b} =</span>
-      <input type="number" class="respuesta" id="respuesta${i}" />
-      <button onclick="abrirCanvasGrande(${i})">📝 Anotar</button>
-      <span class="solucion-ejercicio" id="solucion${i}"></span>
-    `;
-    lista.appendChild(div);
+// Comprobar respuesta
+document.getElementById("btnComprobar").addEventListener("click", function() {
+  let respuesta = parseInt(document.getElementById("respuesta").value);
+  if(respuesta === num1 + num2){
+    document.getElementById("resultado").textContent = "✅ Correcto!";
+    document.getElementById("resultado").style.color = "green";
+  } else {
+    document.getElementById("resultado").textContent = "❌ Intenta otra vez";
+    document.getElementById("resultado").style.color = "red";
   }
+  setTimeout(nuevaOperacion,1500);
+});
 
-  // Canvas grande modal
-  canvasGrande = document.getElementById("canvas-grande");
-  ctxGrande = canvasGrande.getContext("2d");
-  initCanvasGrande();
+// Canvas modal
+const modal = document.getElementById('modalCanvas');
+const canvas = document.getElementById('anotaciones');
+const ctx = canvas.getContext('2d');
+let dibujando = false;
 
-  // Contador
-  minutos=0; segundos=0;
-  clearInterval(temporizador);
-  temporizador = setInterval(()=>{ 
-    segundos++; 
-    if(segundos==60){ segundos=0; minutos++; }
-    document.getElementById("contador").textContent=`${String(minutos).padStart(2,'0')}:${String(segundos).padStart(2,'0')}`;
-  },1000);
+function resizeCanvas() {
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+
+// Eventos canvas
+canvas.addEventListener('mousedown', e => { dibujando=true; dibujar(e); });
+canvas.addEventListener('mouseup', () => dibujando=false);
+canvas.addEventListener('mouseout', () => dibujando=false);
+canvas.addEventListener('mousemove', dibujar);
+
+function dibujar(e){
+  if(!dibujando) return;
+  const rect = canvas.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  ctx.fillStyle="#000";
+  ctx.beginPath();
+  ctx.arc(x,y,3,0,Math.PI*2);
+  ctx.fill();
 }
 
-// Ampliar/Reducir texto
-function ampliarTexto(){ fontSize+=4; actualizarFontSize(); }
-function reducirTexto(){ if(fontSize>10){ fontSize-=4; actualizarFontSize(); } }
-function actualizarFontSize(){
-  const items = document.querySelectorAll(".ejercicio");
-  items.forEach(div => div.style.fontSize = fontSize+"px");
-}
+document.getElementById("btnCanvas").addEventListener("click", ()=>{
+  modal.style.display="flex";
+  resizeCanvas();
+});
+document.getElementById("btnCerrarCanvas").addEventListener("click", ()=> modal.style.display="none");
+document.getElementById("btnBorrarCanvas").addEventListener("click", ()=> ctx.clearRect(0,0,canvas.width,canvas.height));
 
-// Canvas grande (modo Anotar)
-function initCanvasGrande(){
-  let dibujando=false, lastX=0, lastY=0;
-  canvasGrande.addEventListener('pointerdown', e=>{
-    dibujando=true; lastX=e.offsetX; lastY=e.offsetY;
-  });
-  canvasGrande.addEventListener('pointermove', e=>{
-    if(!dibujando) return;
-    ctxGrande.beginPath();
-    ctxGrande.moveTo(lastX,lastY);
-    ctxGrande.lineTo(e.offsetX,e.offsetY);
-    ctxGrande.strokeStyle="black";
-    ctxGrande.lineWidth=3;
-    ctxGrande.stroke();
-    lastX=e.offsetX; lastY=e.offsetY;
-  });
-  canvasGrande.addEventListener('pointerup', ()=>{ dibujando=false; });
-  canvasGrande.addEventListener('pointerout', ()=>{ dibujando=false; });
-}
-
-// Abrir canvas grande modal
-function abrirCanvasGrande(i){
-  canvasActual = i;
-  ctxGrande.clearRect(0,0,canvasGrande.width, canvasGrande.height);
-  document.getElementById("canvas-grande-container").style.display="flex";
-}
-
-// Cerrar canvas grande
-function cerrarCanvasGrande(){
-  document.getElementById("canvas-grande-container").style.display="none";
-}
-
-// Finalizar examen
-function finalizarExamen(){
-  clearInterval(temporizador);
-  let correctas = 0;
-  ejercicios.forEach((ex,i)=>{
-    const val = parseInt(document.getElementById(`respuesta${i}`).value);
-    const sol = document.getElementById(`solucion${i}`);
-    sol.textContent = ex.resultado;
-    if(val===ex.resultado) correctas++;
-  });
-  resultadoFinal.textContent = `Resultado: ${correctas} de ${ejercicios.length}`;
-}
-
-// Volver Home
-function volverHome(){
-  document.getElementById("examen").style.display="none";
-  document.getElementById("inicio").style.display="block";
-  resultadoFinal.textContent="";
-  clearInterval(temporizador);
-}
-
-// Hacer otro examen
-function hacerOtroExamen(){
-  iniciarExamen();
-}
+// Inicial
+nuevaOperacion();
