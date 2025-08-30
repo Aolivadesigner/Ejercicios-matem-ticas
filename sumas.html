@@ -2,37 +2,31 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Examen de Sumas</title>
-<link rel="stylesheet" href="css/estilos.css">
+<title>Ejercicios de Sumas</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/sumas.css">
 </head>
 <body>
-<h1>Examen de Sumas Aleatorias</h1>
+
+<h1>Ejercicios de Sumas</h1>
 <div class="contenedor">
-
-  <div id="inicio">
-    <label for="numEjercicios">Número de ejercicios (15-100): </label>
-    <input type="number" id="numEjercicios" min="15" max="100" value="50">
-    <button onclick="iniciarExamen()">Iniciar Examen</button>
-  </div>
-
-  <div id="examen" style="display:none;">
-    <div id="contador">00:00</div>
-    <div id="controles">
-      <button onclick="ampliarTexto()">🔍➕ Ampliar</button>
-      <button onclick="reducirTexto()">🔍➖ Reducir</button>
-      <button onclick="finalizarExamen()">✅ Finalizar</button>
-      <button onclick="volverHome()">🏠 Home</button>
-      <button onclick="hacerOtroExamen()">🔄 Otro Examen</button>
-    </div>
-    <div id="lista-ejercicios"></div>
-    <div class="resultado-final" id="resultado-final"></div>
-  </div>
+  <div class="operacion" id="operacion"></div>
+  <input type="number" id="respuesta" placeholder="Tu respuesta">
+  <br>
+  <button id="btnComprobar">Comprobar</button>
+  <div id="resultado"></div>
+  <button id="btnCanvas">Anotar</button>
 </div>
 
-<!-- Canvas grande para anotación -->
-<div id="canvas-grande-container">
-  <button id="cerrar-canvas" onclick="cerrarCanvasGrande()">Cerrar ✖</button>
-  <canvas id="canvas-grande"></canvas>
+<a href="index.html" class="volver">Volver al Menú</a>
+
+<!-- Modal canvas fullscreen -->
+<div id="modalCanvas">
+  <canvas id="anotaciones"></canvas>
+  <div>
+    <button id="btnBorrarCanvas">Borrar</button>
+    <button id="btnCerrarCanvas">Cerrar</button>
+  </div>
 </div>
 
 <script src="js/sumas.js"></script>
