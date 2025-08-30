@@ -41,3 +41,16 @@ a:hover, button:hover {
     width: 90%;
   }
 }
+@media(max-width:600px){
+  a, button {
+    font-size: 18px;
+    padding: 16px 20px;
+    width: 90%;
+  }
+
+  h1 {
+    font-size: 36px;      /* más pequeño en móvil */
+    margin-top: 60px;      /* menos margen superior en móvil */
+    margin-bottom: 20px;
+  }
+}
