@@ -46,7 +46,21 @@ function iniciarExamen(){
     document.getElementById("contador").textContent=`${String(minutos).padStart(2,'0')}:${String(segundos).padStart(2,'0')}`;
   },1000);
 }
+//ajuste tamaño de texto
 
+function ampliarTexto(){
+  let lista = document.getElementById("lista-ejercicios");
+  let style = window.getComputedStyle(lista, null).getPropertyValue('font-size');
+  let size = parseFloat(style);
+  lista.style.fontSize = (size + 4) + "px"; // aumenta 4px
+}
+
+function reducirTexto(){
+  let lista = document.getElementById("lista-ejercicios");
+  let style = window.getComputedStyle(lista, null).getPropertyValue('font-size');
+  let size = parseFloat(style);
+  if(size > 10) lista.style.fontSize = (size - 4) + "px"; // disminuye 4px
+}
 // Columna única / multi-columna
 function ampliar(){ lista.style.gridTemplateColumns="1fr"; }
 function reducir(){ lista.style.gridTemplateColumns=""; }
