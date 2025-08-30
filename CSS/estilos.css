@@ -7,7 +7,7 @@ body {
 h1 {
   text-align: center;
   margin-bottom: 40px;
-  font-size: 200px;
+  font-size:36px;
 }
 
 .menu {
@@ -39,6 +39,7 @@ a:hover, button:hover {
   transform: translateY(-2px);
 }
 
+/* Móvil */
 @media(max-width:600px){
   a, button {
     font-size: 18px;
@@ -47,8 +48,38 @@ a:hover, button:hover {
   }
 
   h1 {
-    font-size: 36px;      /* más pequeño en móvil */
-    margin-top: 60px;     /* menos margen superior en móvil */
+    font-size: 36px;
+    margin-top: 40px;
     margin-bottom: 20px;
+  }
+}
+
+/* Tablet (iPad) */
+@media(min-width:601px) and (max-width:900px){
+  a, button {
+    font-size: 28px;
+    padding: 20px 30px;
+    width: 85%;
+  }
+
+  h1 {
+    font-size: 60px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+  }
+}
+/* PC grande */
+@media(min-width:901px){
+  h1 {
+    font-size: 80px;   /* tamaño grande para escritorio */
+    margin-top: 60px;
+    margin-bottom: 40px;
+  }
+
+  a, button {
+    font-size: 40px;    /* botones grandes */
+    padding: 30px 47px;
+    width: 80%;
+    max-width: 400px;
   }
 }
