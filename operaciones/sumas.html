@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Ejercicios de Sumas</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicios de Sumas</title>
 
-<!-- CSS -->
-<link rel="stylesheet" href="../CSS/estilos.css">
-<link rel="stylesheet" href="../CSS/operaciones.css">
-<link rel="stylesheet" href="../CSS/canvas.css">
-<link rel="stylesheet" href="../componentes/Pad-numerico/pad.css">
-
+  <!-- CSS -->
+  <link rel="stylesheet" href="../CSS/estilos.css">
+  <link rel="stylesheet" href="../CSS/operaciones.css">
+  <link rel="stylesheet" href="../CSS/canvas.css">
+  <link rel="stylesheet" href="../componentes/Pad-numerico/pad.css">
 </head>
 <body>
 
@@ -21,17 +21,13 @@
   <br>
   <button id="btnComprobar">Comprobar</button>
   <div id="resultado"></div>
+  
+  <!-- Botón para abrir pizarra -->
   <button id="btnCanvas">Abrir pizarra</button>
+  
+  <!-- Pad numérico -->
+  <div id="padContainer"></div>
 </div>
-
-<!-- Modal iframe pizarra -->
-<div id="modalIframe" style="display:none;">
-  <iframe src="../componentes/canvas/canvas.html"></iframe>
-  <button id="cerrarModal">Cerrar</button>
-</div>
-
-<!-- Pad numérico -->
-<div id="padContainer"></div>
 
 <a href="../index.html" class="volver">Volver al Menú</a>
 
@@ -40,7 +36,7 @@
 <script src="../componentes/Pad-numerico/pad.js"></script>
 <script type="module">
   import { toggleIframe } from "../js/utils.js";
-  toggleIframe("btnCanvas", "modalIframe", "cerrarModal");
+  // Por ahora solo registramos la función; la pizarra la probaremos en otra hoja
 </script>
 
 </body>
