@@ -1,25 +1,20 @@
+import { comprobarRespuesta, numeroAleatorio, limpiarInputResultado } from "../js/utils.js";
+
 // Variables de la operación
 let num1, num2;
 
 // Generar operación aleatoria
 function nuevaOperacion() {
-  num1 = Math.floor(Math.random() * 50) + 1;
-  num2 = Math.floor(Math.random() * 50) + 1;
+  num1 = numeroAleatorio(1, 50);
+  num2 = numeroAleatorio(1, 50);
   document.getElementById("operacion").textContent = `${num1} + ${num2} = ?`;
-  document.getElementById("respuesta").value = "";
-  document.getElementById("resultado").textContent = "";
+  limpiarInputResultado("respuesta", "resultado");
 }
 
 // Comprobar respuesta
 document.getElementById("btnComprobar").addEventListener("click", function() {
-  let respuesta = parseInt(document.getElementById("respuesta").value);
-  if(respuesta === num1 + num2){
-    document.getElementById("resultado").textContent = "✅ Correcto!";
-    document.getElementById("resultado").style.color = "green";
-  } else {
-    document.getElementById("resultado").textContent = "❌ Intenta otra vez";
-    document.getElementById("resultado").style.color = "red";
-  }
+  const respuesta = parseInt(document.getElementById("respuesta").value);
+  comprobarRespuesta(respuesta, num1 + num2, "resultado");
   setTimeout(nuevaOperacion, 1500);
 });
 
