@@ -1,41 +1,39 @@
-/* Canvas responsive */
+/* Modal fullscreen */
 #modalCanvas {
   display: none;
   position: fixed;
   top: 0; left: 0;
-  width: 100vw; 
+  width: 100vw;
   height: 100vh;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0,0,0,0.85);
   z-index: 1000;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  overflow: auto; /* para scroll si es necesario */
+  padding: 2vh 0;
 }
 
+/* Canvas */
 #modalCanvas canvas {
   border: 0.2vw solid #333;
   border-radius: 0.5vw;
-  width: 95vw;        /* ocupa casi todo el ancho disponible */
-  max-width: 700px;   /* para pantallas grandes */
-  height: 75vh;       /* ocupa la mayor parte de la altura */
-  background: white;
+  width: 95vw;
+  max-width: 800px;
+  height: 70vh;
+  max-height: 600px;
+  background: #fff;
   touch-action: none;
 }
 
+/* Botones dentro del modal */
 #modalCanvas button {
   font-size: 4vw;
   padding: 1vw 2vw;
   margin: 1vw;
 }
 
-/* canvas.css */
-#modalCanvas canvas {
-  width: 90vw;
-  height: 70vh;
-  max-width: 800px;
-  max-height: 600px;
-}
-
+/* Responsive para móviles */
 @media(max-width: 600px){
   #modalCanvas canvas {
     width: 95vw;
