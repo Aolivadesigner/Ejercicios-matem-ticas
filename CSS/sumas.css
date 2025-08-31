@@ -65,32 +65,3 @@ button:hover { opacity: 0.85; }
 }
 
 .volver:hover { background: #0b7dda; }
-
-/* Modal fullscreen para canvas */
-#modalCanvas {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; 
-  height: 100vh;
-  background: rgba(0,0,0,0.8);
-  z-index: 1000;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-#modalCanvas canvas {
-  border: 0.2vw solid #333;
-  border-radius: 0.5vw;
-  width: 90vw;
-  height: 80vh;
-  background: white;
-  touch-action: none;
-}
-
-#modalCanvas button {
-  font-size: 4vw;
-  padding: 1vw 2vw;
-  margin: 1vw;
-}
