@@ -1,34 +1,29 @@
-const targetInput = document.getElementById("respuesta");
-const padContainer = document.getElementById("padContainer");
-
-targetInput.addEventListener("focus", () => {
-  padContainer.style.display = "block";
-});
-targetInput.addEventListener("blur", () => {
-  setTimeout(() => padContainer.style.display = "none", 200); 
-  // pequeño delay para permitir click en pad
-});
-
-function initPad(targetInputId) {
-  const container = document.getElementById("padContainer");
-  container.innerHTML = ""; // Limpiar
-
+export function initPad(targetInputId) {
   const targetInput = document.getElementById(targetInputId);
+  const padContainer = document.getElementById("padContainer");
 
-  // Input interno del pad
+  // Mostrar pad al hacer focus
+  targetInput.addEventListener("focus", () => padContainer.style.display = "block");
+  // Ocultar pad al perder focus con pequeño delay
+  targetInput.addEventListener("blur", () => {
+    setTimeout(() => padContainer.style.display = "none", 200);
+  });
+
+  // Limpiar y crear elementos
+  padContainer.innerHTML = "";
+
   const padInput = document.createElement("input");
   padInput.type = "text";
   padInput.id = "padInput";
   padInput.readOnly = true;
-  container.appendChild(padInput);
+  padContainer.appendChild(padInput);
 
-  // Contenedor de botones
   const padNumerico = document.createElement("div");
   padNumerico.id = "padNumerico";
-  container.appendChild(padNumerico);
+  padContainer.appendChild(padNumerico);
 
-  // Botones 1-9
-  for (let i = 1; i <= 9; i++) {
+  // Crear botones 1-9
+  for(let i = 1; i <= 9; i++){
     const btn = document.createElement("button");
     btn.textContent = i;
     btn.addEventListener("click", () => {
@@ -50,6 +45,7 @@ function initPad(targetInputId) {
   // Botón Borrar
   const btnBorrar = document.createElement("button");
   btnBorrar.textContent = "Borrar";
+  btnBorrar.classList.add("special");
   btnBorrar.addEventListener("click", () => {
     padInput.value = "";
     targetInput.value = "";
@@ -59,6 +55,7 @@ function initPad(targetInputId) {
   // Botón Enter
   const btnEnter = document.createElement("button");
   btnEnter.textContent = "Enter";
+  btnEnter.classList.add("special");
   btnEnter.addEventListener("click", () => {
     targetInput.value = padInput.value;
     padInput.value = "";
