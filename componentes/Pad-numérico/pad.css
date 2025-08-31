@@ -1,23 +1,75 @@
-.pad-numerico {
+/* Contenedor principal */
+.padContenedor {
+  width: 90vw;
+  max-width: 400px;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+/* Input de pad */
+#padInput {
+  width: 100%;
+  font-size: 2.5rem;
+  text-align: center;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  border: 2px solid #ccc;
+  background-color: #f9f9f9;
+}
+
+/* Grid de botones numéricos */
+.padGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-top: 20px;
-  max-width: 300px;
-  margin-left: auto;
-  margin-right: auto;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
-.pad-numerico button {
-  padding: 20px;
+/* Botones numéricos */
+.padGrid button {
+  padding: 1.2rem;
   font-size: 2rem;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   border: none;
+  cursor: pointer;
   background: #4CAF50;
   color: white;
-  cursor: pointer;
+  transition: 0.2s;
 }
 
-.pad-numerico button:hover {
-  background: #45a049;
+.padGrid button:hover {
+  opacity: 0.85;
+}
+
+/* Botones Borrar y Enter */
+.padAcciones {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.padAcciones button {
+  flex: 1;
+  padding: 1rem;
+  font-size: 1.8rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  background: #2196F3;
+  color: white;
+  transition: 0.2s;
+}
+
+.padAcciones button:hover {
+  opacity: 0.85;
+}
+
+/* Responsive */
+@media(max-width: 400px){
+  #padInput { font-size: 2rem; padding: 0.5rem; }
+  .padGrid button, .padAcciones button { font-size: 1.5rem; padding: 0.8rem; }
+}
+@media(min-width: 401px) and (max-width: 900px){
+  #padInput { font-size: 2.2rem; padding: 0.6rem; }
+  .padGrid button, .padAcciones button { font-size: 1.8rem; padding: 1rem; }
 }
