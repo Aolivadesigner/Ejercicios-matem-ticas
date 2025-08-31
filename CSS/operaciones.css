@@ -65,3 +65,23 @@ button:hover { opacity: 0.85; }
 }
 
 .volver:hover { background: #0b7dda; }
+
+/* Móviles muy pequeños */
+@media(max-width: 400px){
+  .operacion { font-size: 10vw; }
+  input { font-size: 6vw; width: 60vw; }
+  button, .volver { font-size: 5.5vw; padding: 3vw 4vw; width: 80vw; }
+  #resultado { font-size: 6vw; }
+}
+
+/* Tablets */
+@media(min-width: 401px) and (max-width: 900px){
+  .operacion { font-size: 9vw; }
+  input { font-size: 5.5vw; width: 50vw; }
+  button, .volver { font-size: 5vw; padding: 2.5vw 3.5vw; width: 70vw; }
+  #resultado { font-size: 5.5vw; }
+}
+
+/* Pantallas grandes ya lo tienes con width 90vw y max-width 700px */
+
+
