@@ -1,15 +1,36 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Restas</title>
-
-<!-- CSS -->
+<meta charset="UTF-8">
+<title>Ejercicios de Restas</title>
+<link rel="stylesheet" href="../CSS/estilos.css">
 <link rel="stylesheet" href="../CSS/operaciones.css">
 <link rel="stylesheet" href="../CSS/canvas.css">
-    
 </head>
 <body>
-  <h1>Página de Restas</h1>
+
+<h1>Ejercicios de Restas</h1>
+<div class="contenedor">
+  <div class="operacion" id="operacion"></div>
+  <input type="number" id="respuesta" placeholder="Tu respuesta">
+  <br>
+  <button id="btnComprobar">Comprobar</button>
+  <div id="resultado"></div>
+  <button id="btnCanvas">Anotar</button>
+</div>
+
+<a href="../index.html" class="volver">Volver al Menú</a>
+
+<!-- Modal canvas fullscreen -->
+<div id="modalCanvas">
+  <canvas id="anotaciones"></canvas>
+  <div>
+    <button id="btnBorrarCanvas">Borrar</button>
+    <button id="btnCerrarCanvas">Cerrar</button>
+  </div>
+</div>
+
+<script src="../js/restas.js"></script>
+<script src="../js/Canvas.js"></script>
 </body>
 </html>
