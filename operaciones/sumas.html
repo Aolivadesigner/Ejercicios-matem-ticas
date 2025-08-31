@@ -6,17 +6,24 @@
 <link rel="stylesheet" href="CSS/estilos.css">
 <link rel="stylesheet" href="CSS/operaciones.css">
 <link rel="stylesheet" href="CSS/canvas.css">
+<link rel="stylesheet" href="componentes/Pad-numérico/pad.css">
 </head>
 <body>
 
 <h1>Ejercicios de Sumas</h1>
 <div class="contenedor">
   <div class="operacion" id="operacion"></div>
-  <input type="number" id="respuesta" placeholder="Tu respuesta">
+  <input type="number" id="respuesta" placeholder="Tu respuesta" readonly>
   <br>
   <button id="btnComprobar">Comprobar</button>
   <div id="resultado"></div>
   <button id="btnCanvas">Anotar</button>
+  <button id="btnPad">Pad Numérico</button>
+</div>
+
+<!-- Aquí se carga el pad numérico -->
+<div id="padContenedor">
+  <!-- El contenido del pad.html se puede cargar con JS o iframe -->
 </div>
 
 <a href="index.html" class="volver">Volver al Menú</a>
@@ -32,5 +39,14 @@
 
 <script src="js/sumas.js"></script>
 <script src="js/Canvas.js"></script>
+<script src="componentes/Pad-numérico/pad.js"></script>
+<script>
+// Botón para mostrar/ocultar el pad
+document.getElementById("btnPad").addEventListener("click", ()=>{
+  const pad = document.getElementById("padContenedor");
+  pad.style.display = pad.style.display === "flex" ? "none" : "flex";
+  initPad("respuesta"); // inicializa el pad para el input "respuesta"
+});
+</script>
 </body>
 </html>
