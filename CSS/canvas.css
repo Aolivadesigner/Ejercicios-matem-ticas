@@ -27,3 +27,18 @@
   padding: 1vw 2vw;
   margin: 1vw;
 }
+
+/* canvas.css */
+#modalCanvas canvas {
+  width: 90vw;
+  height: 70vh;
+  max-width: 800px;
+  max-height: 600px;
+}
+
+@media(max-width: 600px){
+  #modalCanvas canvas {
+    width: 95vw;
+    height: 60vh;
+  }
+}
