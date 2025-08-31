@@ -1,3 +1,14 @@
+const targetInput = document.getElementById("respuesta");
+const padContainer = document.getElementById("padContainer");
+
+targetInput.addEventListener("focus", () => {
+  padContainer.style.display = "block";
+});
+targetInput.addEventListener("blur", () => {
+  setTimeout(() => padContainer.style.display = "none", 200); 
+  // pequeño delay para permitir click en pad
+});
+
 function initPad(targetInputId) {
   const container = document.getElementById("padContainer");
   container.innerHTML = ""; // Limpiar
