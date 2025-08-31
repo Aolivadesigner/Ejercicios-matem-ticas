@@ -23,21 +23,27 @@
   <div id="resultado"></div>
   
   <!-- Botón para abrir pizarra -->
-  <button id="btnCanvas">Anotar</button>
+  <button id="btnCanvas">Abrir pizarra</button>
   
   <!-- Pad numérico -->
   <div id="padContainer"></div>
+</div>
+
+<!-- Modal canvas fullscreen -->
+<div id="modalCanvas">
+  <canvas id="anotaciones"></canvas>
+  <div>
+    <button id="btnBorrarCanvas">Borrar</button>
+    <button id="btnCerrarCanvas">Cerrar</button>
+  </div>
 </div>
 
 <a href="../index.html" class="volver">Volver al Menú</a>
 
 <!-- JS -->
 <script src="../js/sumas.js"></script>
+<script src="../js/Canvas.js"></script>
 <script src="../componentes/Pad-numerico/pad.js"></script>
-<script type="module">
-  import { toggleIframe } from "../js/utils.js";
-  // Por ahora solo registramos la función; la pizarra la probaremos en otra hoja
-</script>
 
 </body>
 </html>
