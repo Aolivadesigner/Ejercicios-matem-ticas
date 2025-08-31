@@ -1,15 +1,18 @@
 // utils.js
-
-export function toggleIframe(btnId, iframeId) {
+export function toggleIframe(btnId, modalId, closeBtnId) {
   const btn = document.getElementById(btnId);
-  const iframe = document.getElementById(iframeId);
+  const modal = document.getElementById(modalId);
+  const cerrar = document.getElementById(closeBtnId);
 
-  if (!btn || !iframe) return;
+  if (!btn || !modal || !cerrar) return;
 
+  // Abrir modal al hacer click en el botón
   btn.addEventListener("click", () => {
-    iframe.style.display =
-      iframe.style.display === "none" || iframe.style.display === ""
-        ? "block"
-        : "none";
+    modal.style.display = "flex";  // modal tipo flex para centrar iframe
+  });
+
+  // Cerrar modal
+  cerrar.addEventListener("click", () => {
+    modal.style.display = "none";
   });
 }
