@@ -9,7 +9,6 @@
 <link rel="stylesheet" href="../CSS/operaciones.css">
 <link rel="stylesheet" href="../CSS/canvas.css">
 <link rel="stylesheet" href="../componentes/Pad-numerico/pad.css">
-
 </head>
 <body>
 
@@ -21,27 +20,28 @@
   <br>
   <button id="btnComprobar">Comprobar</button>
   <div id="resultado"></div>
-  <button id="btnCanvas">Anotar</button>
 </div>
-<button id="btnCanvas">Anotar</button>
+
+<!-- Botón único -->
+<button id="btnCanvas">Abrir pizarra</button>
+
+<!-- Pizarra como iframe -->
+<iframe id="iframeCanvas" src="../componentes/canvas.html" 
+        style="display:none; width:100%; height:400px; border:none;">
+</iframe>
+
 <!-- Pad numérico -->
 <div id="padContainer"></div>
-
-<!-- Modal canvas fullscreen -->
-<div id="modalCanvas">
-  <canvas id="anotaciones"></canvas>
-  <div>
-    <button id="btnBorrarCanvas">Borrar</button>
-    <button id="btnCerrarCanvas">Cerrar</button>
-  </div>
-</div>
 
 <a href="../index.html" class="volver">Volver al Menú</a>
 
 <!-- JS -->
 <script src="../js/sumas.js"></script>
-<script src="../js/Canvas.js"></script>
 <script src="../componentes/Pad-numérico/pad.js"></script>
+<script type="module">
+  import { toggleIframe } from "../js/utils.js";
+  toggleIframe("btnCanvas", "iframeCanvas");
+</script>
 
 </body>
 </html>
