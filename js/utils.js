@@ -9,7 +9,21 @@
 export function numeroAleatorio(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+export function nuevaOperacion(operador, min = 1, max = 50) {
+  const num1 = numeroAleatorio(min, max);
+  const num2 = numeroAleatorio(min, max);
+  const simbolo = operador;
 
+  // Actualiza el div de la operación
+  const operacionDiv = document.getElementById("operacion");
+  if (operacionDiv) operacionDiv.textContent = `${num1} ${simbolo} ${num2} = ?`;
+
+  // Limpia input y resultado
+  limpiarInputResultado("respuesta", "resultado");
+
+  // Devuelve los valores para usar en la comprobación
+  return { num1, num2, operador };
+}
 /* -------------------------------------------
 2. Limpiar input y resultado
 -------------------------------------------- */
