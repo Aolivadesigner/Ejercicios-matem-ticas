@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Animales filtrables por categoría</title>
+  <title>Animales filtrables</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; }
     table { border-collapse: collapse; width: 100%; margin-top: 10px; }
@@ -10,7 +10,8 @@
     th { background-color: #4CAF50; color: white; }
     tr:nth-child(even) { background-color: #f2f2f2; }
     .filtros { margin-bottom: 10px; }
-    .filtros label { margin-right: 15px; }
+    .filtros label { margin-right: 15px; display: inline-block; margin-bottom: 5px; }
+    input, select { padding: 5px; }
   </style>
 </head>
 <body>
@@ -37,6 +38,31 @@
         <option value="molusco">Molusco</option>
       </select>
     </label>
+    <label>Patas:
+      <select id="filtroPatas">
+        <option value="">Todas</option>
+        <option value="0">0</option>
+        <option value="2">2</option>
+        <option value="4">4</option>
+        <option value="6">6</option>
+        <option value="8">8</option>
+      </select>
+    </label>
+    <label>Pico:
+      <select id="filtroPico">
+        <option value="">Todos</option>
+        <option value="0">0</option>
+        <option value="1">1</option>
+      </select>
+    </label>
+    <label>Alas:
+      <select id="filtroAlas">
+        <option value="">Todos</option>
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+      </select>
+    </label>
   </div>
 
   <table id="tablaAnimales">
@@ -54,19 +80,24 @@
   </table>
 
   <script type="module">
-fetch("../diccionario/animalProps.json")
-  .then(res => res.json())
-  .then(animales => { /* renderizar tabla */ });
-
     const tbody = document.querySelector("#tablaAnimales tbody");
     const inputNombre = document.getElementById("buscarNombre");
     const filtroCategoria = document.getElementById("filtroCategoria");
     const filtroSubcategoria = document.getElementById("filtroSubcategoria");
+    const filtroPatas = document.getElementById("filtroPatas");
+    const filtroPico = document.getElementById("filtroPico");
+    const filtroAlas = document.getElementById("filtroAlas");
 
+    let animales = {};
+
+    // Renderizar tabla con filtros
     function renderizarTabla() {
       const nombreFiltro = inputNombre.value.toLowerCase();
       const catFiltro = filtroCategoria.value;
       const subcatFiltro = filtroSubcategoria.value;
+      const patasFiltro = filtroPatas.value;
+      const picoFiltro = filtroPico.value;
+      const alasFiltro = filtroAlas.value;
 
       tbody.innerHTML = "";
 
@@ -74,18 +105,21 @@ fetch("../diccionario/animalProps.json")
         if(nombreFiltro && !animal.toLowerCase().includes(nombreFiltro)) return;
         if(catFiltro && props.categoria !== catFiltro) return;
         if(subcatFiltro && props.subcategoria !== subcatFiltro) return;
+        if(patasFiltro && props.patas.toString() !== patasFiltro) return;
+        if(picoFiltro && props.pico.toString() !== picoFiltro) return;
+        if(alasFiltro && props.alas.toString() !== alasFiltro) return;
 
         const tr = document.createElement("tr");
+
+        const tdNombre = document.createElement("td");
+        tdNombre.textContent = animal;
+        tr.appendChild(tdNombre);
 
         ["patas", "pico", "alas"].forEach(prop => {
           const td = document.createElement("td");
           td.textContent = props[prop];
           tr.appendChild(td);
         });
-
-        const tdNombre = document.createElement("td");
-        tdNombre.textContent = animal;
-        tr.insertBefore(tdNombre, tr.firstChild);
 
         const tdCat = document.createElement("td");
         tdCat.textContent = props.categoria;
@@ -99,12 +133,18 @@ fetch("../diccionario/animalProps.json")
       });
     }
 
-    inputNombre.addEventListener("input", renderizarTabla);
-    filtroCategoria.addEventListener("change", renderizarTabla);
-    filtroSubcategoria.addEventListener("change", renderizarTabla);
+    // Cargar JSON externo
+    fetch("../diccionario/animalProps.json")
+      .then(res => res.json())
+      .then(data => {
+        animales = data;
+        renderizarTabla();
+      });
 
-    // Inicial
-    renderizarTabla();
+    // Eventos de filtros
+    [inputNombre, filtroCategoria, filtroSubcategoria, filtroPatas, filtroPico, filtroAlas]
+      .forEach(el => el.addEventListener("input", renderizarTabla));
+
   </script>
 </body>
 </html>
