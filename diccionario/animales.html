@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Animales y propiedades filtrables</title>
+  <title>Animales filtrables por categoría</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; }
     table { border-collapse: collapse; width: 100%; margin-top: 10px; }
@@ -10,27 +10,31 @@
     th { background-color: #4CAF50; color: white; }
     tr:nth-child(even) { background-color: #f2f2f2; }
     .filtros { margin-bottom: 10px; }
-    .filtros label { margin-right: 10px; }
+    .filtros label { margin-right: 15px; }
   </style>
 </head>
 <body>
-  <h1>Lista de animales y propiedades</h1>
+  <h1>Animales y propiedades</h1>
 
   <div class="filtros">
     <label>Buscar nombre: <input type="text" id="buscarNombre" placeholder="Escribe el nombre..."></label>
-    <label>Alas: 
-      <select id="filtroAlas">
-        <option value="">Todos</option>
-        <option value="0">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
+    <label>Categoría:
+      <select id="filtroCategoria">
+        <option value="">Todas</option>
+        <option value="vertebrado">Vertebrado</option>
+        <option value="invertebrado">Invertebrado</option>
       </select>
     </label>
-    <label>Pico: 
-      <select id="filtroPico">
-        <option value="">Todos</option>
-        <option value="0">0</option>
-        <option value="1">1</option>
+    <label>Subcategoría:
+      <select id="filtroSubcategoria">
+        <option value="">Todas</option>
+        <option value="mamifero">Mamífero</option>
+        <option value="ave">Ave</option>
+        <option value="reptil">Reptil</option>
+        <option value="pez">Pez</option>
+        <option value="insecto">Insecto</option>
+        <option value="aracnido">Arácnido</option>
+        <option value="molusco">Molusco</option>
       </select>
     </label>
   </div>
@@ -42,6 +46,8 @@
         <th>Patas</th>
         <th>Pico</th>
         <th>Alas</th>
+        <th>Categoría</th>
+        <th>Subcategoría</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -52,48 +58,48 @@
 
     const tbody = document.querySelector("#tablaAnimales tbody");
     const inputNombre = document.getElementById("buscarNombre");
-    const filtroAlas = document.getElementById("filtroAlas");
-    const filtroPico = document.getElementById("filtroPico");
+    const filtroCategoria = document.getElementById("filtroCategoria");
+    const filtroSubcategoria = document.getElementById("filtroSubcategoria");
 
-    // Función para renderizar la tabla según filtro
     function renderizarTabla() {
       const nombreFiltro = inputNombre.value.toLowerCase();
-      const alasFiltro = filtroAlas.value;
-      const picoFiltro = filtroPico.value;
+      const catFiltro = filtroCategoria.value;
+      const subcatFiltro = filtroSubcategoria.value;
 
-      tbody.innerHTML = ""; // limpiar tabla
+      tbody.innerHTML = "";
 
       Object.entries(animales).forEach(([animal, props]) => {
-        if (nombreFiltro && !animal.toLowerCase().includes(nombreFiltro)) return;
-        if (alasFiltro !== "" && props.alas.toString() !== alasFiltro) return;
-        if (picoFiltro !== "" && props.pico.toString() !== picoFiltro) return;
+        if(nombreFiltro && !animal.toLowerCase().includes(nombreFiltro)) return;
+        if(catFiltro && props.categoria !== catFiltro) return;
+        if(subcatFiltro && props.subcategoria !== subcatFiltro) return;
 
         const tr = document.createElement("tr");
 
+        ["patas", "pico", "alas"].forEach(prop => {
+          const td = document.createElement("td");
+          td.textContent = props[prop];
+          tr.appendChild(td);
+        });
+
         const tdNombre = document.createElement("td");
         tdNombre.textContent = animal;
-        tr.appendChild(tdNombre);
+        tr.insertBefore(tdNombre, tr.firstChild);
 
-        const tdPatas = document.createElement("td");
-        tdPatas.textContent = props.patas;
-        tr.appendChild(tdPatas);
+        const tdCat = document.createElement("td");
+        tdCat.textContent = props.categoria;
+        tr.appendChild(tdCat);
 
-        const tdPico = document.createElement("td");
-        tdPico.textContent = props.pico;
-        tr.appendChild(tdPico);
-
-        const tdAlas = document.createElement("td");
-        tdAlas.textContent = props.alas;
-        tr.appendChild(tdAlas);
+        const tdSub = document.createElement("td");
+        tdSub.textContent = props.subcategoria;
+        tr.appendChild(tdSub);
 
         tbody.appendChild(tr);
       });
     }
 
-    // Eventos de filtros
     inputNombre.addEventListener("input", renderizarTabla);
-    filtroAlas.addEventListener("change", renderizarTabla);
-    filtroPico.addEventListener("change", renderizarTabla);
+    filtroCategoria.addEventListener("change", renderizarTabla);
+    filtroSubcategoria.addEventListener("change", renderizarTabla);
 
     // Inicial
     renderizarTabla();
