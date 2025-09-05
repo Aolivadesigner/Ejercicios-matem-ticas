@@ -1,109 +1,95 @@
-// ===============================
-// 🔢 Funciones básicas
-// ===============================
+// utils.js
+// Este archivo contiene todas las funciones genéricas
+// que comparten sumas, restas y multiplicaciones.
 
-// Genera un número aleatorio entre min y max (inclusive)
+/* -------------------------------------------
+   1. Generar número aleatorio en un rango
+-------------------------------------------- */
 export function numeroAleatorio(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// ===============================
-// 🧹 Manejo de interfaz
-// ===============================
+/* -------------------------------------------
+   2. Generar una operación según el tipo
+   - tipo puede ser: "suma", "resta", "multiplicacion"
+   - rango es el máximo de los números (por defecto 50)
+-------------------------------------------- */
+export function generarOperacion(tipo, rango = 50) {
+  let num1 = numeroAleatorio(1, rango);
+  let num2 = numeroAleatorio(1, rango);
 
-// Limpia el input y el resultado
-export function limpiarInputResultado(inputId, resultadoId) {
-  const input = document.getElementById(inputId);
-  const resultado = document.getElementById(resultadoId);
-
-  if (input) input.value = "";
-  if (resultado) {
-    resultado.textContent = "";
-    resultado.style.color = "black";
+  // Evitar negativos en la resta
+  if (tipo === "resta" && num2 > num1) {
+    [num1, num2] = [num2, num1];
   }
-}
 
-// ===============================
-// ✅ Comprobación simple
-// ===============================
+  let operacionTexto = "";
+  let resultado = 0;
 
-// Comprueba la respuesta y muestra si es correcta o incorrecta
-// Además opcional: mostrar la respuesta correcta
-export function comprobarRespuesta(
-  valorUsuario,
-  valorCorrecto,
-  resultadoId,
-  mostrarCorrecta = true
-) {
-  const resultado = document.getElementById(resultadoId);
-  if (!resultado) return;
-
-  if (valorUsuario === valorCorrecto) {
-    resultado.textContent = "✅ Correcto!";
-    resultado.style.color = "green";
-  } else {
-    let texto = "❌ Intenta otra vez";
-    if (mostrarCorrecta) texto += ` (Respuesta correcta: ${valorCorrecto})`;
-    resultado.textContent = texto;
-    resultado.style.color = "red";
+  switch (tipo) {
+    case "suma":
+      operacionTexto = `${num1} + ${num2} = ?`;
+      resultado = num1 + num2;
+      break;
+    case "resta":
+      operacionTexto = `${num1} - ${num2} = ?`;
+      resultado = num1 - num2;
+      break;
+    case "multiplicacion":
+      operacionTexto = `${num1} × ${num2} = ?`;
+      resultado = num1 * num2;
+      break;
   }
+
+  return { operacionTexto, resultado };
 }
 
-// ===============================
-// ➕ Generador de operaciones
-// ===============================
-
-// Genera una operación básica con un operador dado
-export function nuevaOperacion(operador, min = 1, max = 50) {
-  const num1 = numeroAleatorio(min, max);
-  const num2 = numeroAleatorio(min, max);
-
-  const operacionTexto = `${num1} ${operador} ${num2} = ?`;
-  const operacionDiv = document.getElementById("operacion");
-  if (operacionDiv) operacionDiv.textContent = operacionTexto;
-
-  limpiarInputResultado("respuesta", "resultado");
-
-  // Devuelve los datos para usarlos en el comprobador
-  return { num1, num2, operador };
+/* -------------------------------------------
+   3. Mostrar un mensaje en pantalla
+   - texto → mensaje a mostrar
+   - color → color del mensaje
+-------------------------------------------- */
+export function mostrarResultado(texto, color = "black") {
+  const salida = document.getElementById("resultado");
+  if (!salida) return;
+  salida.textContent = texto;
+  salida.style.color = color;
 }
 
-// ===============================
-// 🎯 Comprobación con intentos y espera
-// ===============================
-
-// Controla intentos (máx. 3, configurable) y tiempos de espera
-export function comprobarConIntentos({
-  valorUsuario,
-  valorCorrecto,
-  resultadoId,
+/* -------------------------------------------
+   4. Comprobar respuesta con intentos
+   - respuesta → lo que escribió el usuario
+   - correcta → la solución correcta
+   - intentos → intentos ya usados
+   - maxIntentos → máximo permitido (ej: 3)
+   - onCorrecto → qué hacer si acierta
+   - onFallido → qué hacer si agota intentos
+   - tiempoCorrecto → espera antes de nueva operación (ms)
+   - tiempoFallido → espera antes de nueva operación si falla
+-------------------------------------------- */
+export function comprobarRespuesta({
+  respuesta,
+  correcta,
+  intentos,
+  maxIntentos,
   onCorrecto,
-  onAgotado,
-  intentosRestantes,
-  setIntentosRestantes,
+  onFallido,
   tiempoCorrecto = 15000, // 15 segundos
   tiempoFallido = 20000   // 20 segundos
 }) {
-  const resultado = document.getElementById(resultadoId);
-  if (!resultado) return;
-
-  if (valorUsuario === valorCorrecto) {
-    resultado.textContent = "✅ Correcto!";
-    resultado.style.color = "green";
+  if (respuesta === correcta) {
+    mostrarResultado("✅ Correcto!", "green");
     setTimeout(onCorrecto, tiempoCorrecto);
-    return true;
+    return { intentos, terminado: true };
   } else {
-    intentosRestantes--;
-    setIntentosRestantes(intentosRestantes);
-
-    if (intentosRestantes > 0) {
-      resultado.textContent = `❌ Incorrecto. Te quedan ${intentosRestantes} intentos.`;
-      resultado.style.color = "orange";
+    intentos++;
+    if (intentos < maxIntentos) {
+      mostrarResultado(`❌ Incorrecto. Intento ${intentos} de ${maxIntentos}`, "orange");
+      return { intentos, terminado: false };
     } else {
-      resultado.textContent = `❌ Fallaste. La respuesta correcta era: ${valorCorrecto}`;
-      resultado.style.color = "red";
-      setTimeout(onAgotado, tiempoFallido);
+      mostrarResultado(`❌ Fallaste. La respuesta correcta era: ${correcta}`, "red");
+      setTimeout(onFallido, tiempoFallido);
+      return { intentos, terminado: true };
     }
-    return false;
   }
 }
