@@ -1,0 +1,13 @@
+{
+  "acciones": ["comer", "beber", "correr", "comprar", "vender", "jugar", "leer", "escribir", "dibujar", "construir",
+               "escuchar", "mirar", "tocar", "cortar", "abrir", "cerrar", "encender", "apagar", "cambiar", "traer"],
+  
+  "mentales": ["pensar", "imaginar", "recordar", "aprender", "olvidar", "soñar", "planear", "dudar", "analizar", "estudiar",
+               "meditar", "razonar", "contemplar", "considerar", "evaluar", "resolver", "comparar", "interpretar", "preguntar", "explicar"],
+
+  "cotidianos": ["trabajar", "estudiar", "cocinar", "viajar", "dormir", "limpiar", "lavar", "organizar", "caminar", "descansar",
+                 "bañarse", "ducharse", "vestirse", "desayunar", "almorzar", "cenar", "regar", "plantar", "lavarropa", "planchar"],
+
+  "movimiento": ["saltar", "nadar", "volar", "subir", "bajar", "girar", "arrastrarse", "escalar", "empujar", "tirar",
+                 "correr", "caminar", "balancear", "rodar", "agacharse", "flexionar", "brincar", "lanzar", "alcanzar", "golpear"]
+}
