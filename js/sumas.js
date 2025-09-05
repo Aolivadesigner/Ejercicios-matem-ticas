@@ -1,22 +1,19 @@
-import { comprobarRespuesta, numeroAleatorio, limpiarInputResultado } from "../js/utils.js";
+import { comprobarRespuesta, limpiarInputResultado, nuevaOperacion } from "../js/utils.js";
 
-// Variables de la operación
-let num1, num2;
+let operacion;
 
-// Generar operación aleatoria
-function nuevaOperacion() {
-  num1 = numeroAleatorio(1, 50);
-  num2 = numeroAleatorio(1, 50);
-  document.getElementById("operacion").textContent = `${num1} + ${num2} = ?`;
-  limpiarInputResultado("respuesta", "resultado");
+// Generar operación de suma
+function generarSuma() {
+  operacion = nuevaOperacion("+", 1, 50);
 }
 
 // Comprobar respuesta
 document.getElementById("btnComprobar").addEventListener("click", function() {
   const respuesta = parseInt(document.getElementById("respuesta").value);
-  comprobarRespuesta(respuesta, num1 + num2, "resultado");
-  setTimeout(nuevaOperacion, 1500);
+  const correcto = eval(`${operacion.num1} ${operacion.operador} ${operacion.num2}`);
+  comprobarRespuesta(respuesta, correcto, "resultado");
+  setTimeout(generarSuma, 1500);
 });
 
 // Inicial
-nuevaOperacion();
+generarSuma();
