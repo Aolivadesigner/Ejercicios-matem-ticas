@@ -1,18 +1,28 @@
-import { comprobarRespuesta, limpiarInputResultado, nuevaOperacion } from "../js/utils.js";
+import { nuevaOperacion, comprobarConIntentos } from "../js/utils.js";
 
 let operacion;
+let intentosRestantes;
 
-// Generar operación de suma
 function generarSuma() {
   operacion = nuevaOperacion("+", 1, 50);
+  intentosRestantes = 3;
 }
 
-// Comprobar respuesta
 document.getElementById("btnComprobar").addEventListener("click", function() {
   const respuesta = parseInt(document.getElementById("respuesta").value);
   const correcto = eval(`${operacion.num1} ${operacion.operador} ${operacion.num2}`);
-  comprobarRespuesta(respuesta, correcto, "resultado");
-  setTimeout(generarSuma, 1500);
+
+  comprobarConIntentos({
+    valorUsuario: respuesta,
+    valorCorrecto: correcto,
+    resultadoId: "resultado",
+    onCorrecto: generarSuma,   // qué pasa si acierta
+    onAgotado: generarSuma,    // qué pasa si gasta intentos
+    intentosRestantes,
+    setIntentosRestantes: (n) => intentosRestantes = n,
+    tiempoCorrecto: 15000,  // se puede ajustar
+    tiempoFallido: 20000
+  });
 });
 
 // Inicial
