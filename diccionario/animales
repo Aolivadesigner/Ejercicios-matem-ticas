@@ -1,0 +1,13 @@
+{
+  "vertebrados": {
+    "mamiferos": ["perro","gato","vaca","caballo","ratón","conejo","cerdo","oveja","león","tigre","elefante","delfín","mono","oso","jirafa","zorro","lobo","rinoceronte","hipopótamo","ballena"],
+    "aves": ["gallina","pato","ganso","loro","águila","paloma","flamenco","pingüino","búho","pavo real","cisne","cuervo","halcón","avestruz","canario"],
+    "peces": ["pez dorado","tiburón","salmón","atún","bacalao","trucha","pez payaso","pez espada","pez globo","anguila"],
+    "reptiles": ["lagarto","serpiente","tortuga","cocodrilo","iguana","camaleón","gecko","dragón de komodo"]
+  },
+  "invertebrados": {
+    "insectos": ["abeja","mosca","mariposa","hormiga","grillo","saltamontes","escarabajo","cucaracha","mantis","libélula"],
+    "arácnidos": ["araña","escorpión","garrapata","ácaro","tarántula"],
+    "moluscos": ["pulpo","caracol","calamar","mejillón","almeja","ostra","sepia"]
+  }
+}
