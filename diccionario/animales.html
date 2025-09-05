@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Animales y propiedades filtrables</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+    th, td { border: 1px solid #333; padding: 8px; text-align: center; }
+    th { background-color: #4CAF50; color: white; }
+    tr:nth-child(even) { background-color: #f2f2f2; }
+    .filtros { margin-bottom: 10px; }
+    .filtros label { margin-right: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Lista de animales y propiedades</h1>
+
+  <div class="filtros">
+    <label>Buscar nombre: <input type="text" id="buscarNombre" placeholder="Escribe el nombre..."></label>
+    <label>Alas: 
+      <select id="filtroAlas">
+        <option value="">Todos</option>
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+      </select>
+    </label>
+    <label>Pico: 
+      <select id="filtroPico">
+        <option value="">Todos</option>
+        <option value="0">0</option>
+        <option value="1">1</option>
+      </select>
+    </label>
+  </div>
+
+  <table id="tablaAnimales">
+    <thead>
+      <tr>
+        <th>Animal</th>
+        <th>Patas</th>
+        <th>Pico</th>
+        <th>Alas</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script type="module">
+    import animales from "../diccionario/animalProps.json" assert { type: "json" };
+
+    const tbody = document.querySelector("#tablaAnimales tbody");
+    const inputNombre = document.getElementById("buscarNombre");
+    const filtroAlas = document.getElementById("filtroAlas");
+    const filtroPico = document.getElementById("filtroPico");
+
+    // Función para renderizar la tabla según filtro
+    function renderizarTabla() {
+      const nombreFiltro = inputNombre.value.toLowerCase();
+      const alasFiltro = filtroAlas.value;
+      const picoFiltro = filtroPico.value;
+
+      tbody.innerHTML = ""; // limpiar tabla
+
+      Object.entries(animales).forEach(([animal, props]) => {
+        if (nombreFiltro && !animal.toLowerCase().includes(nombreFiltro)) return;
+        if (alasFiltro !== "" && props.alas.toString() !== alasFiltro) return;
+        if (picoFiltro !== "" && props.pico.toString() !== picoFiltro) return;
+
+        const tr = document.createElement("tr");
+
+        const tdNombre = document.createElement("td");
+        tdNombre.textContent = animal;
+        tr.appendChild(tdNombre);
+
+        const tdPatas = document.createElement("td");
+        tdPatas.textContent = props.patas;
+        tr.appendChild(tdPatas);
+
+        const tdPico = document.createElement("td");
+        tdPico.textContent = props.pico;
+        tr.appendChild(tdPico);
+
+        const tdAlas = document.createElement("td");
+        tdAlas.textContent = props.alas;
+        tr.appendChild(tdAlas);
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Eventos de filtros
+    inputNombre.addEventListener("input", renderizarTabla);
+    filtroAlas.addEventListener("change", renderizarTabla);
+    filtroPico.addEventListener("change", renderizarTabla);
+
+    // Inicial
+    renderizarTabla();
+  </script>
+</body>
+</html>
