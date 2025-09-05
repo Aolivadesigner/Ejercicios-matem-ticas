@@ -1,4 +1,4 @@
-import { nuevaOperacion, comprobarConIntentos, mostrarResultado, } from "../js/utils.js";
+import { nuevaOperacion, comprobarConIntentos, mostrarResultado, generarProblema} from "../js/utils.js";
 
 let operacion;
 let intentosRestantes;
