@@ -54,7 +54,9 @@
   </table>
 
   <script type="module">
-    import animales from "../diccionario/animalProps.json" assert { type: "json" };
+fetch("../diccionario/animalProps.json")
+  .then(res => res.json())
+  .then(animales => { /* renderizar tabla */ });
 
     const tbody = document.querySelector("#tablaAnimales tbody");
     const inputNombre = document.getElementById("buscarNombre");
